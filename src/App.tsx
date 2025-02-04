@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Services } from './pages/Services';
-import { Equity } from './pages/Equity';
 import { Contact } from './pages/Contact';
 import { Application } from './pages/Application';
 import { ThankYou } from './pages/ThankYou';
@@ -20,7 +19,6 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/services" element={<Services />} />
-            <Route path="/equity" element={<Equity />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/apply" element={<Application />} />
             <Route path="/thank-you" element={<ThankYou />} />
