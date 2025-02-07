@@ -271,7 +271,6 @@ export function Home() {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#FF6F00]/5 via-[#FF3B30]/5 to-[#8C1AFF]/5" />
           
-          {/* Circuit board pattern background */}
           <div className="absolute inset-0" style={{ 
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54 48 L6 48 L6 12' stroke='%23FF6F00' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3Cpath d='M18 48 L18 36 L42 36 L42 12' stroke='%23FF3B30' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3Cpath d='M30 48 L30 24 L54 24' stroke='%238C1AFF' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3C/svg%3E")`,
             backgroundSize: '60px 60px'
@@ -299,15 +298,6 @@ export function Home() {
               </div>
 
               <div className="relative p-8">
-                {/* Price tag */}
-                <div className="absolute top-8 right-8">
-                  <div className="relative">
-                    <div className="text-4xl font-bold text-[#8C1AFF]">$99</div>
-                    <div className="text-sm text-gray-600">One-time fee</div>
-                  </div>
-                </div>
-
-                {/* Features Grid */}
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {auditFeatures.map((feature, index) => {
                     const Icon = feature.icon;
@@ -327,11 +317,11 @@ export function Home() {
                   })}
                 </div>
 
-                {/* CTA Button */}
-                <div className="text-center">
-                  <Link to="/services">
+                {/* CTA Button with Price */}
+                <div className="flex items-center justify-center space-x-4">
+                  <Link to="/services" className="flex-1">
                     <Button 
-                      className="group relative overflow-hidden text-lg px-8 py-4 w-full sm:w-auto"
+                      className="group relative overflow-hidden text-lg px-8 py-4 w-full"
                       style={{
                         backgroundColor: '#8C1AFF',
                         color: 'white',
@@ -339,28 +329,15 @@ export function Home() {
                     >
                       <span className="flex items-center justify-center">
                         Get the AI Exploration Audit
-                        <span className="ml-2 text-sm">($99)</span>
                         <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </span>
                     </Button>
                   </Link>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-[#8C1AFF]">$99</div>
+                    <div className="text-sm text-gray-600">One-time fee</div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="mt-8 grid grid-cols-3 gap-4 text-center text-sm text-gray-600">
-              <div className="flex items-center justify-center space-x-2">
-                <Clock className="w-4 h-4 text-[#FF6F00]" />
-                <span>2-3 Day Turnaround</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2">
-                <Shield className="w-4 h-4 text-[#FF3B30]" />
-                <span>Money-back Guarantee</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2">
-                <HeartHandshake className="w-4 h-4 text-[#8C1AFF]" />
-                <span>Expert Support</span>
               </div>
             </div>
           </div>
@@ -409,11 +386,13 @@ export function Home() {
                   >
                     <item.icon className="w-5 h-5" style={{ color: item.color }} />
                   </div>
-                  <p className="text-center text-sm font-semibold">{item.text}</p>
+                  <p className="text-center text-sm font-semibold relative z-10">{item.text}</p>
                   
                   {/* Hover gradient border */}
                   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute inset-0 p-[1px] rounded-xl bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF]" />
+                    <div className="absolute inset-0 p-[1px] rounded-xl">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#FF6F00]/10 via-[#FF3B30]/10 to-[#8C1AFF]/10" />
+                    </div>
                   </div>
                 </div>
               ))}
