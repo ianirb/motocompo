@@ -2,6 +2,7 @@ import React from 'react';
 import { Bot, Brain, Zap, ArrowRight, Cpu, Users, Workflow, Target, CheckCircle, FileText, Route, PenTool as Tool, Clock, Shield, HeartHandshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
+import { TestimonialSlider } from '../components/TestimonialSlider';
 
 export function Home() {
   const benefits = [
@@ -120,8 +121,9 @@ export function Home() {
                 </Link>
               </div>
 
+              {/* Stats Section - Updated to be horizontal */}
               <div className="pt-8 border-t border-gray-200">
-                <div className="flex flex-wrap gap-8 items-center">
+                <div className="grid grid-cols-3 gap-4">
                   <div className="flex items-center gap-2">
                     <div className="w-12 h-12 rounded-full bg-[#FF6F00]/10 flex items-center justify-center">
                       <Bot className="w-6 h-6 text-[#FF6F00]" />
@@ -438,6 +440,9 @@ export function Home() {
           </div>
         </div>
       </div>
+
+      {/* Testimonial Slider */}
+      <TestimonialSlider />
     </>
   );
 }
