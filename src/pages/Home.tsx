@@ -279,18 +279,6 @@ export function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6">
-              Not Sure Where to Start?
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF]">
-                Let's Audit Your Systems First
-              </span>
-            </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              Get a comprehensive analysis of your business systems and a custom AI implementation roadmap.
-            </p>
-          </div>
-
           <div className="max-w-4xl mx-auto">
             <div className="group relative bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02]">
               {/* Gradient border */}
@@ -299,14 +287,6 @@ export function Home() {
               </div>
 
               <div className="relative p-8">
-                {/* Price tag */}
-                <div className="absolute top-8 right-8">
-                  <div className="relative">
-                    <div className="text-4xl font-bold text-[#8C1AFF]">$99</div>
-                    <div className="text-sm text-gray-600">One-time fee</div>
-                  </div>
-                </div>
-
                 {/* Features Grid */}
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {auditFeatures.map((feature, index) => {
@@ -327,7 +307,7 @@ export function Home() {
                   })}
                 </div>
 
-                {/* CTA Button */}
+                {/* CTA Button with Price */}
                 <div className="text-center">
                   <Link to="/services">
                     <Button 
@@ -339,28 +319,12 @@ export function Home() {
                     >
                       <span className="flex items-center justify-center">
                         Get the AI Exploration Audit
-                        <span className="ml-2 text-sm">($99)</span>
+                        <span className="ml-2 text-sm bg-white/20 px-2 py-1 rounded">$99 one-time</span>
                         <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </span>
                     </Button>
                   </Link>
                 </div>
-              </div>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="mt-8 grid grid-cols-3 gap-4 text-center text-sm text-gray-600">
-              <div className="flex items-center justify-center space-x-2">
-                <Clock className="w-4 h-4 text-[#FF6F00]" />
-                <span>2-3 Day Turnaround</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2">
-                <Shield className="w-4 h-4 text-[#FF3B30]" />
-                <span>Money-back Guarantee</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2">
-                <HeartHandshake className="w-4 h-4 text-[#8C1AFF]" />
-                <span>Expert Support</span>
               </div>
             </div>
           </div>
@@ -382,7 +346,7 @@ export function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-6">
               No Long-Term Contracts.
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF]">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] animate-gradient-text">
                 No Guesswork. Just Results.
               </span>
             </h2>
@@ -405,15 +369,15 @@ export function Home() {
                 >
                   <div 
                     className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 mx-auto"
-                    style={{ backgroundColor: `${item.color}10` }}
+                    style={{ backgroundColor: `${item.color}20` }}
                   >
                     <item.icon className="w-5 h-5" style={{ color: item.color }} />
                   </div>
-                  <p className="text-center text-sm font-semibold">{item.text}</p>
+                  <p className="text-center text-sm font-semibold relative z-10">{item.text}</p>
                   
-                  {/* Hover gradient border */}
+                  {/* Hover gradient border - adjusted opacity */}
                   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute inset-0 p-[1px] rounded-xl bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF]" />
+                    <div className="absolute inset-0 p-[1px] rounded-xl bg-gradient-to-r from-[#FF6F00]/30 via-[#FF3B30]/30 to-[#8C1AFF]/30" />
                   </div>
                 </div>
               ))}
