@@ -7,7 +7,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Animations */
+/* Floating Animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
@@ -20,36 +20,42 @@ html {
 @keyframes pulse-glow {
   0%, 100% {
     opacity: 0.5;
-    transform: scale(1);
   }
   50% {
     opacity: 0.8;
-    transform: scale(1.1);
   }
 }
 
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Button Hover Effects */
+.btn-hover-effect {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-/* Custom Classes */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.btn-hover-effect:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+.btn-hover-effect:hover:before {
+  width: 300%;
+  height: 300%;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.6s ease-out forwards;
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
 .prose {
@@ -62,84 +68,32 @@ html {
   margin-bottom: 1.25em;
 }
 
-/* Button Styles */
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  transition-property: all;
-  transition-duration: 300ms;
-}
-
-.btn-primary::after {
-  content: '';
-  position: absolute;
-  inset: 0;
+/* Section Transitions */
+.section-fade-in {
   opacity: 0;
-  transition-property: opacity;
-  transition-duration: 300ms;
-  background: linear-gradient(45deg, rgba(255,111,0,0.2), rgba(255,59,48,0.2), rgba(140,26,255,0.2));
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.btn-primary:hover::after {
+.section-fade-in.visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
-/* Section Styles */
-.section-padding {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+/* Gradient Text Animation */
+.animate-gradient-text {
+  background-size: 200% auto;
+  animation: gradient 8s linear infinite;
 }
 
-.section-title {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.section-subtitle {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  color: rgb(55, 65, 81);
-  max-width: 48rem;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-/* Card Styles */
-.feature-card {
-  position: relative;
-  background-color: white;
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  transition-property: all;
-  transition-duration: 300ms;
-  overflow: hidden;
-}
-
-.feature-card:hover {
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  transform: translateY(-0.25rem);
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.25rem;
-  transform: scaleX(0);
-  transition-property: transform;
-  transition-duration: 300ms;
-  transform-origin: left;
-  background: linear-gradient(to right, #FF6F00, #FF3B30, #8C1AFF);
-}
-
-.feature-card:hover::before {
-  transform: scaleX(1);
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
