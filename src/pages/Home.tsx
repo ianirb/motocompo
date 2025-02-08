@@ -94,31 +94,39 @@ export function Home() {
                 AI automation is no longer the future—it's the competitive edge your business needs right now. Let us show you exactly where AI can increase leads, streamline workflows, and boost revenue.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact" className="flex-1">
-                  <Button 
-                    className="w-full group relative overflow-hidden"
-                    style={{
-                      backgroundColor: '#FF6F00',
-                      color: 'white',
-                    }}
-                  >
-                    <span className="flex items-center justify-center">
-                      Supercharge Your Business with AI
-                      <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </Button>
-                </Link>
-                <Link to="/services" className="flex-1">
-                  <Button 
-                    className="w-full group relative overflow-hidden bg-white hover:bg-[#8C1AFF] text-[#8C1AFF] hover:text-white border-2 border-[#8C1AFF] transition-all duration-300"
-                  >
-                    <span className="flex items-center justify-center">
-                      Get an AI Exploration Audit
-                      <span className="ml-2 text-sm">($99)</span>
-                    </span>
-                  </Button>
-                </Link>
+              <div className="flex flex-col sm:flex-row gap-8 items-stretch max-w-4xl mx-auto">
+                <div className="flex-1 flex flex-col items-center">
+                  <span className="text-gray-600 mb-2">Ready to Automate?</span>
+                  <Link to="/contact" className="w-full">
+                    <Button 
+                      className="w-full h-[60px] group relative overflow-hidden"
+                      style={{
+                        backgroundColor: '#FF6F00',
+                        color: 'white',
+                      }}
+                    >
+                      <span className="flex items-center justify-center gap-2 px-6">
+                        <span className="whitespace-nowrap">Supercharge Your Business with AI</span>
+                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+                      </span>
+                    </Button>
+                  </Link>
+                </div>
+
+                <div className="flex-1 flex flex-col items-center">
+                  <span className="text-gray-600 mb-2">Not Sure Where to Start?</span>
+                  <Link to="/services" className="w-full">
+                    <Button 
+                      className="w-full h-[60px] group relative overflow-hidden bg-white hover:bg-[#8C1AFF] text-[#8C1AFF] hover:text-white border-2 border-[#8C1AFF] transition-all duration-300"
+                    >
+                      <span className="flex items-center justify-center gap-2 px-6">
+                        <span className="whitespace-nowrap">Get an AI Exploration Audit</span>
+                        <span className="whitespace-nowrap text-sm">($99)</span>
+                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+                      </span>
+                    </Button>
+                  </Link>
+                </div>
               </div>
 
               {/* Stats Section - Updated to be horizontal */}
