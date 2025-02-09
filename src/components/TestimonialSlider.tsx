@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Quote, Star } from 'lucide-react';
+import { Quote, Star, ArrowRight } from 'lucide-react';
 import { Button } from './Button';
 
 interface Testimonial {
@@ -113,46 +113,86 @@ const testimonials: Testimonial[] = [
   }
 ];
 
-// Double the testimonials array to create a seamless loop
-const duplicatedTestimonials = [...testimonials, ...testimonials];
+// Triple the testimonials array to ensure smooth infinite scroll
+const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
 export function TestimonialSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const isPaused = useRef(false);
+  const animationRef = useRef<number>();
 
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    let animationFrameId: number;
-    let startTime: number | null = null;
-    const duration = 40000; // 40 seconds for one complete cycle
-    const startPosition = 0;
-    const endPosition = slider.scrollWidth / 2; // Half because we duplicated the items
+    // Calculate the width of a single testimonial card including gap
+    const cardWidth = 400 + 24; // card width + gap
+    const totalWidth = testimonials.length * cardWidth;
+    let currentTranslate = 0;
 
-    function animate(currentTime: number) {
-      if (!startTime) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = (elapsed % duration) / duration;
+    const animate = () => {
+      if (!isPaused.current) {
+        currentTranslate -= 0.5; // Adjust speed by changing this value
 
-      if (slider) {
-        slider.scrollLeft = startPosition + (endPosition * progress);
-
-        // Reset when we reach the halfway point
-        if (slider.scrollLeft >= endPosition) {
-          startTime = currentTime;
-          slider.scrollLeft = 0;
+        // Reset position when we've scrolled one full set of testimonials
+        if (Math.abs(currentTranslate) >= totalWidth) {
+          currentTranslate = 0;
         }
+
+        slider.style.transform = `translateX(${currentTranslate}px)`;
       }
+      animationRef.current = requestAnimationFrame(animate);
+    };
 
-      animationFrameId = requestAnimationFrame(animate);
-    }
+    animationRef.current = requestAnimationFrame(animate);
 
-    animationFrameId = requestAnimationFrame(animate);
+    const handleMouseEnter = () => {
+      isPaused.current = true;
+    };
+
+    const handleMouseLeave = () => {
+      isPaused.current = false;
+    };
+
+    // Touch event handlers
+    let touchStart: number;
+    let translateStart: number;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStart = e.touches[0].clientX;
+      translateStart = currentTranslate;
+      isPaused.current = true;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchStart === undefined) return;
+      const diff = e.touches[0].clientX - touchStart;
+      currentTranslate = translateStart + diff;
+      slider.style.transform = `translateX(${currentTranslate}px)`;
+    };
+
+    const handleTouchEnd = () => {
+      touchStart = undefined;
+      setTimeout(() => {
+        isPaused.current = false;
+      }, 1000);
+    };
+
+    slider.addEventListener('mouseenter', handleMouseEnter);
+    slider.addEventListener('mouseleave', handleMouseLeave);
+    slider.addEventListener('touchstart', handleTouchStart);
+    slider.addEventListener('touchmove', handleTouchMove);
+    slider.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
+      slider.removeEventListener('mouseenter', handleMouseEnter);
+      slider.removeEventListener('mouseleave', handleMouseLeave);
+      slider.removeEventListener('touchstart', handleTouchStart);
+      slider.removeEventListener('touchmove', handleTouchMove);
+      slider.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 
@@ -179,99 +219,104 @@ export function TestimonialSlider() {
           </p>
         </div>
 
-        {/* Testimonial Slider */}
-        <div 
-          ref={sliderRef}
-          className="flex overflow-x-hidden gap-6 mb-16 cursor-grab active:cursor-grabbing"
-          style={{ scrollBehavior: 'smooth' }}
-        >
-          {duplicatedTestimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="flex-none w-[400px] group"
-            >
-              {/* Glassmorphism Card */}
-              <div className="relative h-full backdrop-blur-md bg-white/30 rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:-rotate-1 overflow-hidden shadow-lg hover:shadow-xl">
-                {/* Gradient border */}
-                <div className="absolute inset-0 p-[1px] bg-gradient-to-r from-[#FF6F00]/50 via-[#FF3B30]/50 to-[#8C1AFF]/50 rounded-2xl opacity-50 group-hover:opacity-100 transition-opacity" />
-                
-                {/* Inner content with glass effect */}
-                <div className="relative h-full bg-gradient-to-br from-white/60 to-white/30 p-6 rounded-2xl">
-                  {/* Company Logo */}
-                  {testimonial.logo && (
-                    <div className="absolute top-6 right-6 w-20 h-10">
-                      <img
-                        src={testimonial.logo}
-                        alt={testimonial.company}
-                        className="w-full h-full object-contain opacity-70"
-                      />
-                    </div>
-                  )}
-
-                  {/* Rating */}
-                  {testimonial.rating && (
-                    <div className="flex items-center gap-1 mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 fill-current"
-                          style={{ color: testimonial.color }}
+        {/* Testimonial Slider Container */}
+        <div className="overflow-hidden mb-16">
+          {/* Testimonial Track */}
+          <div 
+            ref={sliderRef}
+            className="flex gap-6 transition-transform duration-100 ease-linear will-change-transform"
+            style={{ width: 'max-content' }}
+          >
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="w-[400px] group"
+              >
+                {/* Glassmorphism Card */}
+                <div className="relative h-full backdrop-blur-md bg-white/30 rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:-rotate-1 overflow-hidden shadow-lg hover:shadow-xl">
+                  {/* Gradient border */}
+                  <div className="absolute inset-0 p-[1px] bg-gradient-to-r from-[#FF6F00]/50 via-[#FF3B30]/50 to-[#8C1AFF]/50 rounded-2xl opacity-50 group-hover:opacity-100 transition-opacity" />
+                  
+                  {/* Inner content with glass effect */}
+                  <div className="relative h-full bg-gradient-to-br from-white/60 to-white/30 p-6 rounded-2xl">
+                    {/* Company Logo */}
+                    {testimonial.logo && (
+                      <div className="absolute top-6 right-6 w-20 h-10">
+                        <img
+                          src={testimonial.logo}
+                          alt={testimonial.company}
+                          className="w-full h-full object-contain opacity-70"
+                          loading="lazy"
                         />
+                      </div>
+                    )}
+
+                    {/* Rating */}
+                    {testimonial.rating && (
+                      <div className="flex items-center gap-1 mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-current"
+                            style={{ color: testimonial.color }}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Quote */}
+                    <Quote 
+                      className="w-8 h-8 mb-4 opacity-80"
+                      style={{ color: testimonial.color }}
+                    />
+                    
+                    <blockquote className="text-sm mb-6 line-clamp-4 text-gray-700">
+                      "{testimonial.quote}"
+                    </blockquote>
+
+                    {/* Profile */}
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] rounded-full blur-md opacity-50" />
+                        <img
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="relative w-12 h-12 rounded-full object-cover ring-2 ring-white"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm">{testimonial.name}</div>
+                        <div className="text-gray-600 text-sm">{testimonial.role}</div>
+                        <div className="text-gray-600 text-sm">{testimonial.company}</div>
+                      </div>
+                    </div>
+
+                    {/* Metrics */}
+                    <div className="grid grid-cols-2 gap-2">
+                      {testimonial.metrics?.map((metric, idx) => (
+                        <div 
+                          key={idx}
+                          className="bg-white/40 backdrop-blur-sm rounded-lg p-3 transition-all duration-300 hover:bg-white/60"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="text-xs text-gray-600">{metric.label}</div>
+                            <div 
+                              className="text-xs font-medium"
+                              style={{ color: testimonial.color }}
+                            >
+                              {metric.change}
+                            </div>
+                          </div>
+                          <div className="text-sm font-bold">{metric.value}</div>
+                        </div>
                       ))}
                     </div>
-                  )}
-
-                  {/* Quote */}
-                  <Quote 
-                    className="w-8 h-8 mb-4 opacity-80"
-                    style={{ color: testimonial.color }}
-                  />
-                  
-                  <blockquote className="text-sm mb-6 line-clamp-4 text-gray-700">
-                    "{testimonial.quote}"
-                  </blockquote>
-
-                  {/* Profile */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] rounded-full blur-md opacity-50" />
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="relative w-12 h-12 rounded-full object-cover ring-2 ring-white"
-                      />
-                    </div>
-                    <div>
-                      <div className="font-bold text-sm">{testimonial.name}</div>
-                      <div className="text-gray-600 text-sm">{testimonial.role}</div>
-                      <div className="text-gray-600 text-sm">{testimonial.company}</div>
-                    </div>
-                  </div>
-
-                  {/* Metrics */}
-                  <div className="grid grid-cols-2 gap-2">
-                    {testimonial.metrics?.map((metric, idx) => (
-                      <div 
-                        key={idx}
-                        className="bg-white/40 backdrop-blur-sm rounded-lg p-3 transition-all duration-300 hover:bg-white/60"
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <div className="text-xs text-gray-600">{metric.label}</div>
-                          <div 
-                            className="text-xs font-medium"
-                            style={{ color: testimonial.color }}
-                          >
-                            {metric.change}
-                          </div>
-                        </div>
-                        <div className="text-sm font-bold">{metric.value}</div>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* CTA Section with Glassmorphism */}
