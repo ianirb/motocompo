@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { TestimonialSlider } from '../components/TestimonialSlider';
 
-export function Home() {
+export default function Home() {
   const benefits = [
     {
       title: "Convert More Leads",
@@ -84,9 +84,16 @@ export function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                AI-Powered Business Automation:
+                <span className="block">AI-Powered Business</span>
+                <span className="block">Automation:</span>
                 <span className="block mt-2 bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] text-transparent bg-clip-text animate-gradient">
-                  Work Less, Earn More, Never Miss a Lead
+                  Work Less,
+                </span>
+                <span className="block bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] text-transparent bg-clip-text animate-gradient">
+                  Earn More,
+                </span>
+                <span className="block bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] text-transparent bg-clip-text animate-gradient">
+                  Never Miss a Lead
                 </span>
               </h1>
 
@@ -99,11 +106,8 @@ export function Home() {
                   <span className="text-gray-600 mb-2">Ready to Automate?</span>
                   <Link to="/contact" className="w-full">
                     <Button 
-                      className="w-full h-[60px] group relative overflow-hidden"
-                      style={{
-                        backgroundColor: '#FF6F00',
-                        color: 'white',
-                      }}
+                      variant="primary"
+                      className="w-full h-[60px] group relative overflow-hidden bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#FF6F00]"
                     >
                       <span className="flex items-center justify-center gap-2 px-6">
                         <span className="whitespace-nowrap">Supercharge Your Business with AI</span>
@@ -117,7 +121,8 @@ export function Home() {
                   <span className="text-gray-600 mb-2">Not Sure Where to Start?</span>
                   <Link to="/services" className="w-full">
                     <Button 
-                      className="w-full h-[60px] group relative overflow-hidden bg-white hover:bg-[#8C1AFF] text-[#8C1AFF] hover:text-white border-2 border-[#8C1AFF] transition-all duration-300"
+                      variant="secondary"
+                      className="w-full h-[60px] group relative overflow-hidden bg-white border-2 border-[#8C1AFF] text-[#8C1AFF] hover:bg-[#8C1AFF] hover:text-white"
                     >
                       <span className="flex items-center justify-center gap-2 px-6">
                         <span className="whitespace-nowrap">Get an AI Exploration Audit</span>
@@ -260,11 +265,8 @@ export function Home() {
           <div className="text-center">
             <Link to="/contact">
               <Button 
-                className="group relative overflow-hidden text-lg px-8 py-4"
-                style={{
-                  backgroundColor: '#8C1AFF',
-                  color: 'white',
-                }}
+                variant="primary"
+                className="text-lg px-8 py-4"
               >
                 <span className="flex items-center justify-center">
                   Supercharge Your Business with AI
@@ -321,11 +323,8 @@ export function Home() {
                 <div className="text-center">
                   <Link to="/services">
                     <Button 
-                      className="group relative overflow-hidden text-lg px-8 py-4 w-full sm:w-auto"
-                      style={{
-                        backgroundColor: '#8C1AFF',
-                        color: 'white',
-                      }}
+                      variant="secondary"
+                      className="text-lg px-8 py-4 w-full sm:w-auto"
                     >
                       <span className="flex items-center justify-center">
                         Get the AI Exploration Audit
@@ -414,11 +413,8 @@ export function Home() {
 
                   <Link to="/contact">
                     <Button 
-                      className="group relative overflow-hidden text-lg px-8 py-4 w-full"
-                      style={{
-                        backgroundColor: '#FF6F00',
-                        color: 'white',
-                      }}
+                      variant="primary"
+                      className="text-lg px-8 py-4 w-full"
                     >
                       <span className="flex items-center justify-center">
                         Supercharge Your Business with AI

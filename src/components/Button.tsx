@@ -6,10 +6,11 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function Button({ variant = 'primary', children, className = '', ...props }: ButtonProps) {
-  const baseStyles = 'btn-hover-effect px-6 py-3 font-bold rounded-lg transform hover:scale-105 transition-all duration-300';
+  const baseStyles = 'relative btn-hover-effect px-6 py-3 font-bold rounded-lg transform hover:scale-105 transition-all duration-300';
+  
   const variants = {
-    primary: 'bg-[#FF6F00] text-black hover:bg-[#FF3B30] hover:shadow-lg hover:shadow-[#FF6F00]/20',
-    secondary: 'bg-[#8C1AFF] text-white hover:bg-[#FF3B30] hover:shadow-lg hover:shadow-[#8C1AFF]/20'
+    primary: 'bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#FF6F00] text-white hover:shadow-xl hover:shadow-[#FF6F00]/30',
+    secondary: 'bg-white text-[#8C1AFF] hover:text-white border-2 border-[#8C1AFF] hover:bg-[#8C1AFF] hover:shadow-xl hover:shadow-[#8C1AFF]/30'
   };
 
   return (
@@ -17,7 +18,7 @@ export function Button({ variant = 'primary', children, className = '', ...props
       className={`${baseStyles} ${variants[variant]} ${className}`}
       {...props}
     >
-      {children}
+      <div className="relative z-10">{children}</div>
     </button>
   );
 }

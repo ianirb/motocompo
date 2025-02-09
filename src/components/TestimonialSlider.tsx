@@ -328,11 +328,8 @@ export function TestimonialSlider() {
                 <span className="text-gray-600 mb-2">Ready to Automate?</span>
                 <Link to="/contact" className="w-full">
                   <Button 
+                    variant="primary"
                     className="w-full h-[60px] group relative overflow-hidden"
-                    style={{
-                      backgroundColor: '#FF6F00',
-                      color: 'white',
-                    }}
                   >
                     <span className="flex items-center justify-center gap-2 px-6">
                       <span className="whitespace-nowrap">Supercharge Your Business with AI</span>
@@ -346,7 +343,8 @@ export function TestimonialSlider() {
                 <span className="text-gray-600 mb-2">Not Sure Where to Start?</span>
                 <Link to="/services" className="w-full">
                   <Button 
-                    className="w-full h-[60px] group relative overflow-hidden bg-white hover:bg-[#8C1AFF] text-[#8C1AFF] hover:text-white border-2 border-[#8C1AFF] transition-all duration-300"
+                    variant="secondary"
+                    className="w-full h-[60px] group relative overflow-hidden"
                   >
                     <span className="flex items-center justify-center gap-2 px-6">
                       <span className="whitespace-nowrap">Get an AI Exploration Audit</span>
