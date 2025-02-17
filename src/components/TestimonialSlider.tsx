@@ -65,56 +65,8 @@ const testimonials: Testimonial[] = [
     ],
     industry: "E-commerce",
     color: "#8C1AFF"
-  },
-  {
-    name: "David Park",
-    role: "Head of Sales",
-    company: "InsureTech Pro",
-    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=200&h=50",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&h=200",
-    quote: "AI automation helped us process claims 5x faster while reducing errors by 90%. Our customers couldn't be happier.",
-    rating: 5,
-    metrics: [
-      { label: "Claims Processing", value: "6 hrs", change: "-80%" },
-      { label: "Error Rate", value: "0.5%", change: "-90%" }
-    ],
-    industry: "Insurance",
-    color: "#FF6F00"
-  },
-  {
-    name: "Lisa Martinez",
-    role: "Founder",
-    company: "HealthTech Solutions",
-    logo: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=200&h=50",
-    image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=200&h=200",
-    quote: "The AI scheduling system eliminated double bookings and reduced no-shows by 75%. It's like having an extra staff member.",
-    rating: 5,
-    metrics: [
-      { label: "No-show Rate", value: "5%", change: "-75%" },
-      { label: "Staff Hours Saved", value: "30hrs/wk", change: "+25%" }
-    ],
-    industry: "Healthcare",
-    color: "#FF3B30"
-  },
-  {
-    name: "James Wilson",
-    role: "CTO",
-    company: "DataDrive Analytics",
-    logo: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=200&h=50",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200",
-    quote: "Implementing AI for data analysis cut our reporting time by 90% while uncovering insights we would have missed.",
-    rating: 5,
-    metrics: [
-      { label: "Analysis Time", value: "2 hrs", change: "-90%" },
-      { label: "Revenue Impact", value: "$2.5M", change: "+45%" }
-    ],
-    industry: "Data Analytics",
-    color: "#8C1AFF"
   }
 ];
-
-// Triple the testimonials array to ensure smooth infinite scroll
-const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
 
 export function TestimonialSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -139,7 +91,9 @@ export function TestimonialSlider() {
           currentTranslate = 0;
         }
 
-        slider.style.transform = `translateX(${currentTranslate}px)`;
+        if (slider) {
+          slider.style.transform = `translateX(${currentTranslate}px)`;
+        }
       }
       animationRef.current = requestAnimationFrame(animate);
     };
@@ -154,35 +108,8 @@ export function TestimonialSlider() {
       isPaused.current = false;
     };
 
-    // Touch event handlers
-    let touchStart: number;
-    let translateStart: number;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStart = e.touches[0].clientX;
-      translateStart = currentTranslate;
-      isPaused.current = true;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (touchStart === undefined) return;
-      const diff = e.touches[0].clientX - touchStart;
-      currentTranslate = translateStart + diff;
-      slider.style.transform = `translateX(${currentTranslate}px)`;
-    };
-
-    const handleTouchEnd = () => {
-      touchStart = undefined;
-      setTimeout(() => {
-        isPaused.current = false;
-      }, 1000);
-    };
-
     slider.addEventListener('mouseenter', handleMouseEnter);
     slider.addEventListener('mouseleave', handleMouseLeave);
-    slider.addEventListener('touchstart', handleTouchStart);
-    slider.addEventListener('touchmove', handleTouchMove);
-    slider.addEventListener('touchend', handleTouchEnd);
 
     return () => {
       if (animationRef.current) {
@@ -190,9 +117,6 @@ export function TestimonialSlider() {
       }
       slider.removeEventListener('mouseenter', handleMouseEnter);
       slider.removeEventListener('mouseleave', handleMouseLeave);
-      slider.removeEventListener('touchstart', handleTouchStart);
-      slider.removeEventListener('touchmove', handleTouchMove);
-      slider.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 
@@ -202,11 +126,6 @@ export function TestimonialSlider() {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#FF6F00]/5 via-[#FF3B30]/5 to-[#8C1AFF]/5" />
         <div className="absolute inset-0 backdrop-blur-[100px]" />
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54 48 L6 48 L6 12' stroke='%23FF6F00' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3Cpath d='M18 48 L18 36 L42 36 L42 12' stroke='%23FF3B30' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3Cpath d='M30 48 L30 24 L54 24' stroke='%238C1AFF' stroke-opacity='0.1' fill='none' stroke-width='0.5'/%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px',
-          opacity: 0.1
-        }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -227,9 +146,9 @@ export function TestimonialSlider() {
             className="flex gap-6 transition-transform duration-100 ease-linear will-change-transform"
             style={{ width: 'max-content' }}
           >
-            {duplicatedTestimonials.map((testimonial, index) => (
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
               <div
-                key={index}
+                key={`${testimonial.name}-${index}`}
                 className="w-[400px] group"
               >
                 {/* Glassmorphism Card */}
@@ -293,25 +212,27 @@ export function TestimonialSlider() {
                     </div>
 
                     {/* Metrics */}
-                    <div className="grid grid-cols-2 gap-2">
-                      {testimonial.metrics?.map((metric, idx) => (
-                        <div 
-                          key={idx}
-                          className="bg-white/40 backdrop-blur-sm rounded-lg p-3 transition-all duration-300 hover:bg-white/60"
-                        >
-                          <div className="flex items-center justify-between mb-1">
-                            <div className="text-xs text-gray-600">{metric.label}</div>
-                            <div 
-                              className="text-xs font-medium"
-                              style={{ color: testimonial.color }}
-                            >
-                              {metric.change}
+                    {testimonial.metrics && (
+                      <div className="grid grid-cols-2 gap-2">
+                        {testimonial.metrics.map((metric, idx) => (
+                          <div 
+                            key={idx}
+                            className="bg-white/40 backdrop-blur-sm rounded-lg p-3 transition-all duration-300 hover:bg-white/60"
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="text-xs text-gray-600">{metric.label}</div>
+                              <div 
+                                className="text-xs font-medium"
+                                style={{ color: testimonial.color }}
+                              >
+                                {metric.change}
+                              </div>
                             </div>
+                            <div className="text-sm font-bold">{metric.value}</div>
                           </div>
-                          <div className="text-sm font-bold">{metric.value}</div>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -326,7 +247,7 @@ export function TestimonialSlider() {
             <div className="flex flex-col sm:flex-row gap-8 items-stretch">
               <div className="flex-1 flex flex-col items-center">
                 <span className="text-gray-600 mb-2">Ready to Automate?</span>
-                <Link to="/contact" className="w-full">
+                <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer" className="w-full">
                   <Button 
                     variant="primary"
                     className="w-full h-[60px] group relative overflow-hidden"
@@ -336,12 +257,12 @@ export function TestimonialSlider() {
                       <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                     </span>
                   </Button>
-                </Link>
+                </a>
               </div>
 
               <div className="flex-1 flex flex-col items-center">
                 <span className="text-gray-600 mb-2">Not Sure Where to Start?</span>
-                <Link to="/services" className="w-full">
+                <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer" className="w-full">
                   <Button 
                     variant="secondary"
                     className="w-full h-[60px] group relative overflow-hidden"
@@ -352,7 +273,7 @@ export function TestimonialSlider() {
                       <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                     </span>
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>

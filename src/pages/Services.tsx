@@ -161,11 +161,11 @@ export function Services() {
           <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
             Empowering businesses with cutting-edge AI solutions for outreach, lead generation, and operational excellence.
           </p>
-          <Link to="/contact">
+          <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer">
             <Button variant="primary" className="text-lg">
               Get Started with AI Today
             </Button>
-          </Link>
+          </a>
         </div>
 
         {/* Services Grid */}
@@ -243,20 +243,19 @@ export function Services() {
                 </div>
                 
                 {/* CTA Button */}
-                <Link to="/contact" className="mt-auto">
+                <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer" className="mt-auto">
                   <Button 
                     variant="primary"
                     className="w-full text-sm py-2 transition-all duration-300 group-hover:shadow-lg backdrop-blur-sm bg-opacity-90"
                     style={{
                       backgroundColor: 'black',
                       color: 'white',
-                      boxShadow: `0 0 20px ${service.color}20`,
-                      '--tw-ring-color': service.color
+                      boxShadow: `0 0 20px ${service.color}20`
                     }}
                   >
                     {service.cta}
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           ))}

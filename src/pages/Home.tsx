@@ -119,7 +119,7 @@ export default function Home() {
 
                 <div className="flex-1 flex flex-col items-center">
                   <span className="text-gray-600 mb-2">Not Sure Where to Start?</span>
-                  <Link to="/services" className="w-full">
+                  <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer" className="w-full">
                     <Button 
                       variant="secondary"
                       className="w-full h-[60px] group relative overflow-hidden bg-white border-2 border-[#8C1AFF] text-[#8C1AFF] hover:bg-[#8C1AFF] hover:text-white"
@@ -130,7 +130,7 @@ export default function Home() {
                         <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                       </span>
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
 
@@ -321,7 +321,7 @@ export default function Home() {
 
                 {/* CTA Button with Price */}
                 <div className="text-center">
-                  <Link to="/services">
+                  <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer">
                     <Button 
                       variant="secondary"
                       className="text-lg px-8 py-4 w-full sm:w-auto"
@@ -332,7 +332,7 @@ export default function Home() {
                         <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                       </span>
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
