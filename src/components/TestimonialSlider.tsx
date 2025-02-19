@@ -1,70 +1,83 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Quote, Star, ArrowRight } from 'lucide-react';
+import { Quote, Star, ArrowRight, Users, Clock, Zap, MessageSquare, Target } from 'lucide-react';
 import { Button } from './Button';
 
 interface Testimonial {
   name: string;
   role: string;
   company: string;
-  logo?: string;
   image: string;
   quote: string;
-  rating?: number;
-  metrics?: {
+  metrics: {
     label: string;
     value: string;
     change: string;
+    icon: React.ElementType;
   }[];
-  industry?: string;
   color: string;
 }
 
 const testimonials: Testimonial[] = [
   {
-    name: "Sarah Chen",
-    role: "CEO",
-    company: "TechFlow Solutions",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?auto=format&fit=crop&w=200&h=50",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200",
-    quote: "The AI automation system revolutionized our customer service. Response times dropped by 80% while satisfaction scores soared to 98%.",
-    rating: 5,
+    name: "Marren Miranti",
+    role: "External Relations Director",
+    company: "Think Private Lending",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&h=200",
+    quote: "Irby AI provided an AI-driven outreach system that transformed how we nurture investor relationships at Think Private Lending. Now, our follow-ups are immediate, personalized, and highly effective—ensuring that no potential deal falls through the cracks.",
     metrics: [
-      { label: "Customer Response Time", value: "2 min", change: "-80%" },
-      { label: "Satisfaction Score", value: "98%", change: "+15%" }
+      { label: "Investor Response Rate", value: "+32%", change: "Increase", icon: Users },
+      { label: "Reply Rate", value: "+4.4%", change: "Improvement", icon: MessageSquare }
     ],
-    industry: "SaaS",
     color: "#FF6F00"
   },
   {
-    name: "Marcus Rodriguez",
-    role: "Operations Director",
-    company: "Global Logistics Co",
-    logo: "https://images.unsplash.com/photo-1606857521015-7f9fcf423740?auto=format&fit=crop&w=200&h=50",
+    name: "Matthew Alvarez",
+    role: "Marketing Director",
+    company: "El Arroyo",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&h=200",
-    quote: "Implementing AI for route optimization and demand forecasting increased our delivery efficiency by 40% and reduced fuel costs significantly.",
-    rating: 5,
+    quote: "We implemented their AI-powered email and SMS follow-up system, and the results were immediate—higher open rates, more repeat customers, and a streamlined process that saves us hours every week.",
     metrics: [
-      { label: "Delivery Efficiency", value: "40%", change: "+40%" },
-      { label: "Fuel Costs", value: "$12K/mo", change: "-25%" }
+      { label: "Open Rate", value: "+27%", change: "SMS & Email", icon: MessageSquare },
+      { label: "Repeat Customers", value: "+19%", change: "Increase", icon: Users }
     ],
-    industry: "Logistics",
     color: "#FF3B30"
   },
   {
-    name: "Emily Watson",
-    role: "Marketing Manager",
-    company: "Retail Innovations",
-    logo: "https://images.unsplash.com/photo-1622675363311-3e1904dc1885?auto=format&fit=crop&w=200&h=50",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&h=200",
-    quote: "The AI-driven personalization engine transformed our e-commerce platform. Our conversion rate doubled within three months.",
-    rating: 5,
+    name: "Hannah Hensley",
+    role: "Owner and Founder",
+    company: "Dark Horse Weightlifting Club",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200",
+    quote: "Ian understands the balance between automation and human touch, and I couldn't be happier with the results.",
     metrics: [
-      { label: "Conversion Rate", value: "8.5%", change: "+100%" },
-      { label: "Avg Order Value", value: "$95", change: "+35%" }
+      { label: "Member Sign Ups", value: "+42%", change: "Increase", icon: Users },
+      { label: "Scheduling Time", value: "-65%", change: "Reduction", icon: Clock }
     ],
-    industry: "E-commerce",
     color: "#8C1AFF"
+  },
+  {
+    name: "Steven King",
+    role: "Chief Technology Officer",
+    company: "Lumio HX",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200",
+    quote: "With automated outreach and intelligent follow-up sequences, we've seen higher engagement and conversion rates without adding to our workload. Their expertise in AI automation is top-tier.",
+    metrics: [
+      { label: "Lead Conversion", value: "+55%", change: "Increase", icon: Target },
+      { label: "Operational Load", value: "-38%", change: "Reduction", icon: Zap }
+    ],
+    color: "#FF6F00"
+  },
+  {
+    name: "Kha Tran",
+    role: "Founder",
+    company: "VBU",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200",
+    quote: "What impressed me most was the seamless integration with our existing tools, making the transition smooth and efficient. If you want to scale without sacrificing quality, Irby AI Solutions is the way to go!",
+    metrics: [
+      { label: "Lead Conversions", value: "3x", change: "Increase", icon: Target },
+      { label: "Customer Support", value: "-50%", change: "Time Reduction", icon: Clock }
+    ],
+    color: "#FF3B30"
   }
 ];
 
@@ -77,16 +90,14 @@ export function TestimonialSlider() {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    // Calculate the width of a single testimonial card including gap
     const cardWidth = 400 + 24; // card width + gap
     const totalWidth = testimonials.length * cardWidth;
     let currentTranslate = 0;
 
     const animate = () => {
       if (!isPaused.current) {
-        currentTranslate -= 0.5; // Adjust speed by changing this value
+        currentTranslate -= 0.5;
 
-        // Reset position when we've scrolled one full set of testimonials
         if (Math.abs(currentTranslate) >= totalWidth) {
           currentTranslate = 0;
         }
@@ -131,7 +142,7 @@ export function TestimonialSlider() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-6">
-            Trusted by Businesses Ready to Scale with AI
+            Real Results from Real Businesses
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             See how businesses are transforming their operations with our AI solutions.
@@ -158,30 +169,16 @@ export function TestimonialSlider() {
                   
                   {/* Inner content with glass effect */}
                   <div className="relative h-full bg-gradient-to-br from-white/60 to-white/30 p-6 rounded-2xl">
-                    {/* Company Logo */}
-                    {testimonial.logo && (
-                      <div className="absolute top-6 right-6 w-20 h-10">
-                        <img
-                          src={testimonial.logo}
-                          alt={testimonial.company}
-                          className="w-full h-full object-contain opacity-70"
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-
                     {/* Rating */}
-                    {testimonial.rating && (
-                      <div className="flex items-center gap-1 mb-4">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-4 h-4 fill-current"
-                            style={{ color: testimonial.color }}
-                          />
-                        ))}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 fill-current"
+                          style={{ color: testimonial.color }}
+                        />
+                      ))}
+                    </div>
 
                     {/* Quote */}
                     <Quote 
@@ -212,27 +209,27 @@ export function TestimonialSlider() {
                     </div>
 
                     {/* Metrics */}
-                    {testimonial.metrics && (
-                      <div className="grid grid-cols-2 gap-2">
-                        {testimonial.metrics.map((metric, idx) => (
+                    <div className="grid grid-cols-2 gap-2">
+                      {testimonial.metrics.map((metric, idx) => {
+                        const Icon = metric.icon;
+                        return (
                           <div 
                             key={idx}
                             className="bg-white/40 backdrop-blur-sm rounded-lg p-3 transition-all duration-300 hover:bg-white/60"
                           >
                             <div className="flex items-center justify-between mb-1">
                               <div className="text-xs text-gray-600">{metric.label}</div>
-                              <div 
-                                className="text-xs font-medium"
+                              <Icon 
+                                className="w-4 h-4"
                                 style={{ color: testimonial.color }}
-                              >
-                                {metric.change}
-                              </div>
+                              />
                             </div>
                             <div className="text-sm font-bold">{metric.value}</div>
+                            <div className="text-xs text-gray-600">{metric.change}</div>
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -247,7 +244,7 @@ export function TestimonialSlider() {
             <div className="flex flex-col sm:flex-row gap-8 items-stretch">
               <div className="flex-1 flex flex-col items-center">
                 <span className="text-gray-600 mb-2">Ready to Automate?</span>
-                <a href="https://form.typeform.com/to/xhYsGnhQ" target="_blank" rel="noopener noreferrer" className="w-full">
+                <Link to="/contact" className="w-full">
                   <Button 
                     variant="primary"
                     className="w-full h-[60px] group relative overflow-hidden"
@@ -257,7 +254,7 @@ export function TestimonialSlider() {
                       <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                     </span>
                   </Button>
-                </a>
+                </Link>
               </div>
 
               <div className="flex-1 flex flex-col items-center">
