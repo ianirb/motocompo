@@ -1,4 +1,3 @@
-import React from 'react';
 import { Bot, Brain, Zap, ArrowRight, Cpu, Users, Workflow, Target, CheckCircle, FileText, Route, PenTool as Tool, Clock, Shield, HeartHandshake } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
