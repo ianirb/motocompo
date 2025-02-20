@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowUp, Check } from 'lucide-react';
 import { Button } from './Button';
-import { isValidEmail } from '../utils/validation';
 import { supabase } from '../lib/supabase';
+
+// Email validation regex
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+function isValidEmail(email: string): boolean {
+  return EMAIL_REGEX.test(email);
+}
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -161,7 +167,7 @@ export function Footer() {
                       color: 'white',
                       boxShadow: '0 0 20px rgba(255,59,48,0.2)',
                       '--tw-ring-color': '#FF3B30'
-                    }}
+                    } as React.CSSProperties}
                     disabled={isAnimating || !email}
                   >
                     {isAnimating ? (

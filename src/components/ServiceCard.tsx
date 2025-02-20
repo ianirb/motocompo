@@ -1,5 +1,4 @@
-import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from './Button';
 
@@ -71,8 +70,9 @@ export function ServiceCard({ title, description, icon: Icon, color }: ServiceCa
             style={{
               backgroundColor: 'black',
               color: 'white',
-              boxShadow: `0 0 20px ${color}20`
-            }}
+              boxShadow: `0 0 20px ${color}20`,
+              '--tw-ring-color': color
+            } as React.CSSProperties}
           >
             Learn More
           </Button>
