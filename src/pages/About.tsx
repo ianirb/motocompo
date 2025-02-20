@@ -1,4 +1,3 @@
-import React from 'react';
 import { Award, Users, Lightbulb } from 'lucide-react';
 
 export function About() {

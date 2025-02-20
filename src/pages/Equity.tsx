@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Rocket, Target, HandshakeIcon, FileText, Cog, Zap, HeartHandshake, ChevronDown } from 'lucide-react';
@@ -99,8 +98,7 @@ export function Equity() {
                 style={{
                   backgroundColor: 'black',
                   color: 'white',
-                  boxShadow: '0 0 20px rgba(255,111,0,0.2)',
-                  '--tw-ring-color': '#FF6F00'
+                  boxShadow: '0 0 20px rgba(255,111,0,0.2)'
                 }}
               >
                 Apply Now
@@ -276,8 +274,7 @@ export function Equity() {
                 style={{
                   backgroundColor: 'black',
                   color: 'white',
-                  boxShadow: '0 0 20px rgba(255,111,0,0.2)',
-                  '--tw-ring-color': '#FF6F00'
+                  boxShadow: '0 0 20px rgba(255,111,0,0.2)'
                 }}
               >
                 Apply Now
