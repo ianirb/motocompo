@@ -1,107 +1,160 @@
 import { useState } from 'react';
-import { Menu, X, Cpu } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../components/Button';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
-export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+export default function Contact() {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const links = [
-    { href: '/', label: 'Home' },
-    { href: '/services', label: 'Services' },
-    { href: '/contact', label: 'Contact' },
-  ];
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Navigate to thank you page
+    navigate('/thank-you');
+  };
 
   return (
-    <nav className="fixed w-full bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <Link 
-            to="/" 
-            className="flex items-center space-x-2 group"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {/* Animated Logo */}
-            <div className="relative w-8 h-8">
-              <Cpu 
-                className={`w-8 h-8 transition-all duration-500 ${isHovered ? 'rotate-180 scale-110 text-[#FF3B30]' : 'rotate-0 scale-100 text-black'}`}
-                style={{ 
-                  filter: `drop-shadow(0 0 8px ${isHovered ? '#FF3B30' : '#000000'}40)`
-                }}
-              />
-              <div 
-                className={`absolute inset-0 rounded-full transition-all duration-500 ${isHovered ? 'scale-150 opacity-20' : 'scale-100 opacity-0'}`}
-                style={{ 
-                  background: `radial-gradient(circle, ${isHovered ? '#FF3B30' : '#000000'} 0%, transparent 70%)`
-                }}
-              />
-            </div>
+    <div className="py-24">
+      <div className="relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute transform rotate-12 bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] h-96 w-full opacity-10"></div>
+        </div>
 
-            {/* Brand Text */}
-            <div className="h-16 flex items-center">
-              <div className="relative h-8 w-48 px-2 overflow-hidden">
-                <span 
-                  className={`absolute inset-0 flex items-center font-display font-bold text-2xl tracking-wider transition-transform duration-500 ${
-                    isHovered ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-                  }`}
-                >
-                  IRBY AI
-                </span>
-                <span 
-                  className={`absolute inset-0 flex items-center font-display font-bold text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] transition-transform duration-500 ${
-                    isHovered ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-                  }`}
-                >
-                  SOLUTIONS
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="text-black hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] transition-all duration-300 relative group"
-              >
-                {link.label}
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-              </Link>
-            ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl font-bold mb-6">Contact Us</h1>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Ready to transform your business with AI? Get in touch with us today.
+            </p>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-black hover:text-[#FF6F00] transition-colors"
-            >
-              {isOpen ? <X /> : <Menu />}
-            </button>
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <div className="group relative bg-[#F8F4ED] rounded-lg border-[3px] border-[#FF6F00] transition-all duration-300 overflow-hidden">
+              {/* Motocompo-inspired diagonal stripes */}
+              <div 
+                className="absolute top-0 right-0 w-24 h-24 -rotate-45 transform origin-top-right opacity-10"
+                style={{ 
+                  background: 'repeating-linear-gradient(45deg, #FF6F00, #FF6F00 2px, transparent 2px, transparent 8px)'
+                }}
+              ></div>
+
+              {/* Scanline texture */}
+              <div className="absolute inset-0 opacity-5">
+                {Array.from({ length: 50 }).map((_, i) => (
+                  <div 
+                    key={i}
+                    className="h-px w-full"
+                    style={{ 
+                      background: 'rgba(0,0,0,0.1)',
+                      marginTop: `${i * 4}px`
+                    }}
+                  ></div>
+                ))}
+              </div>
+
+              <form onSubmit={handleSubmit} className="relative p-6 space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 bg-white/50 shadow-sm focus:border-[#FF6F00] focus:ring focus:ring-[#FF6F00] focus:ring-opacity-50"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 bg-white/50 shadow-sm focus:border-[#FF6F00] focus:ring focus:ring-[#FF6F00] focus:ring-opacity-50"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                  <textarea
+                    id="message"
+                    rows={4}
+                    required
+                    className="mt-1 block w-full rounded-md border-gray-300 bg-white/50 shadow-sm focus:border-[#FF6F00] focus:ring focus:ring-[#FF6F00] focus:ring-opacity-50"
+                  ></textarea>
+                </div>
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full transition-all duration-300 group-hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                    boxShadow: '0 0 20px rgba(255,111,0,0.2)'
+                  }}
+                >
+                  {isSubmitting ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+                  ) : (
+                    'Send Message'
+                  )}
+                </Button>
+              </form>
+            </div>
+
+            {/* Contact Information */}
+            <div className="space-y-8">
+              {[
+                { icon: Mail, title: 'Email', content: 'ian@irbyaisolutions.com', color: '#FF6F00' },
+                { icon: Phone, title: 'Phone', content: '832-797-0083', color: '#FF3B30' },
+                { icon: MapPin, title: 'Location', content: 'The Woodlands, TX', color: '#8C1AFF' }
+              ].map((item, index) => (
+                <div 
+                  key={index}
+                  className="group relative bg-[#F8F4ED] rounded-lg border-[3px] p-6 transition-all duration-300 hover:scale-[1.02] hover:-rotate-1 overflow-hidden"
+                  style={{ borderColor: item.color }}
+                >
+                  {/* Diagonal stripes */}
+                  <div 
+                    className="absolute top-0 right-0 w-24 h-24 -rotate-45 transform origin-top-right opacity-10"
+                    style={{ 
+                      background: `repeating-linear-gradient(45deg, ${item.color}, ${item.color} 2px, transparent 2px, transparent 8px)`
+                    }}
+                  ></div>
+
+                  {/* Scanlines */}
+                  <div className="absolute inset-0 opacity-5">
+                    {Array.from({ length: 20 }).map((_, i) => (
+                      <div 
+                        key={i}
+                        className="h-px w-full"
+                        style={{ 
+                          background: 'rgba(0,0,0,0.1)',
+                          marginTop: `${i * 4}px`
+                        }}
+                      ></div>
+                    ))}
+                  </div>
+
+                  <div className="relative flex items-center space-x-4">
+                    <item.icon 
+                      className="w-6 h-6 flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                      style={{ color: item.color }}
+                    />
+                    <div>
+                      <h3 className="text-lg font-bold">{item.title}</h3>
+                      <p className="text-gray-700">{item.content}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="block px-3 py-2 text-black hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r from-[#FF6F00] via-[#FF3B30] to-[#8C1AFF] hover:bg-gray-50 rounded-md transition-all duration-300"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
+    </div>
   );
 }

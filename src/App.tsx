@@ -3,7 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import Home from './pages/Home';
 import { Services } from './pages/Services';
-import { Contact } from './pages/Contact';
+import Contact from './pages/Contact';
 import { Application } from './pages/Application';
 import { ThankYou } from './pages/ThankYou';
 import { ScrollToTopOnMount } from './components/ScrollToTopOnMount';

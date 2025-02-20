@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MessageSquare, Database, Users, Bot, Zap, Phone, Calendar, Quote, BarChart, Clock } from 'lucide-react';
+import { MessageSquare, Database, Users, Bot, Phone, Calendar, Quote, BarChart, Clock } from 'lucide-react';
 import { Button } from '../components/Button';
 
 export function Services() {

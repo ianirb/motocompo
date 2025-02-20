@@ -98,7 +98,8 @@ export function Equity() {
                 style={{
                   backgroundColor: 'black',
                   color: 'white',
-                  boxShadow: '0 0 20px rgba(255,111,0,0.2)'
+                  boxShadow: '0 0 20px rgba(255,111,0,0.2)',
+                  '--tw-ring-color': '#FF6F00'
                 }}
               >
                 Apply Now
@@ -274,7 +275,8 @@ export function Equity() {
                 style={{
                   backgroundColor: 'black',
                   color: 'white',
-                  boxShadow: '0 0 20px rgba(255,111,0,0.2)'
+                  boxShadow: '0 0 20px rgba(255,111,0,0.2)',
+                  '--tw-ring-color': '#FF6F00'
                 }}
               >
                 Apply Now
