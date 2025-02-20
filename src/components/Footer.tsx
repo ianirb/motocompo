@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowUp, Check } from 'lucide-react';
 import { Button } from './Button';
@@ -165,9 +165,8 @@ export function Footer() {
                     style={{
                       backgroundColor: isAnimating ? '#FF3B30' : 'black',
                       color: 'white',
-                      boxShadow: '0 0 20px rgba(255,59,48,0.2)',
-                      '--tw-ring-color': '#FF3B30'
-                    } as React.CSSProperties}
+                      boxShadow: '0 0 20px rgba(255,59,48,0.2)'
+                    }}
                     disabled={isAnimating || !email}
                   >
                     {isAnimating ? (

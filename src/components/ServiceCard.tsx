@@ -70,9 +70,8 @@ export function ServiceCard({ title, description, icon: Icon, color }: ServiceCa
             style={{
               backgroundColor: 'black',
               color: 'white',
-              boxShadow: `0 0 20px ${color}20`,
-              '--tw-ring-color': color
-            } as React.CSSProperties}
+              boxShadow: `0 0 20px ${color}20`
+            }}
           >
             Learn More
           </Button>

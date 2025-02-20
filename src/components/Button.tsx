@@ -1,11 +1,11 @@
-import React from 'react';
+import type { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
   children: React.ReactNode;
 }
 
-export function Button({ variant = 'primary', children, className = '', ...props }: ButtonProps) {
+export function Button({ variant = 'primary', children, className = '', style, ...props }: ButtonProps) {
   const baseStyles = 'relative btn-hover-effect px-6 py-3 font-bold rounded-lg transform hover:scale-105 transition-all duration-300';
   
   const variants = {
@@ -16,6 +16,7 @@ export function Button({ variant = 'primary', children, className = '', ...props
   return (
     <button 
       className={`${baseStyles} ${variants[variant]} ${className}`}
+      style={style}
       {...props}
     >
       <div className="relative z-10">{children}</div>
